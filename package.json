@@ -1,23 +1,10 @@
 {
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:dev": "npx cypress open --e2e --config-file dev.config.js --browser chrome",
+    "cy:qa": "npx cypress open --e2e --config-file qa.config.js --browser chrome"
+  },
   "dependencies": {
     "cypress": "^12.5.1"
-  },
-  "name": "zeromortgage",
-  "version": "1.0.0",
-  "description": "Automation",
-  "main": "index.js",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/im-bstrukov/BFG-Cypress.git"
-  },
-  "author": "Bohdan Strukov",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/im-bstrukov/BFG-Cypress/issues"
-  },
-  "homepage": "https://github.com/im-bstrukov/BFG-Cypress#readme"
+  }
 }

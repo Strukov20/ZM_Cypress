@@ -1,9 +1,9 @@
 export class BaseHelper {
     static login () {
-        cy.visit('https://application.interfirst.com/')
+        cy.visit('')
         cy.intercept({
             method: "POST",
-            url: "https://skynet-accounts-api.azurewebsites.net/api/signin/createrequest"
+            url: "api/signin/createrequest"
         }).as('getVerification')
         cy.get('[data-testid="header__loginButton"]')
         .click()
@@ -22,9 +22,21 @@ export class BaseHelper {
     }
 
     static logout () {
-        cy.visit('https://application.interfirst.com/')
+        cy.visit('')
+
+        cy.intercept({
+            method: "GET",
+            url: "api/application/*/loan-progress/v3"
+        }).as('pageLoaded')
+
+        cy.wait('@pageLoaded')
+        .its('response.statusCode')
+        .should('equal', 200);
+
         cy.get('[data-testid="header__dropDownMenuButton"]')
+        .should("be.visible")
         .click()
+
         cy.get('button')
             .contains('Log Out')
             .click()
