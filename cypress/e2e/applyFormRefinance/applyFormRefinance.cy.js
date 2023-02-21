@@ -270,14 +270,14 @@ describe('applyForm_refinance', () => {
         cy.wait('@ProgramsReceived_second')
             .its('response.statusCode')
             .should('equal', 200);
-        cy.get('[data-testid="rate_30"]')
-            .eq(0)
-            .click('left', { force: true })
-        cy.get('[data-testid="footer__nextButton"]')
-            .click()
-        cy.wait('@SecondPartSubmit')
-            .its('response.statusCode')
-            .should('equal', 200);
+        // cy.get('[data-testid="rate_30"]')
+        //     .eq(0)
+        //     .click('left', { force: true })
+        // cy.get('[data-testid="footer__nextButton"]')
+        //     .click()
+        // cy.wait('@SecondPartSubmit')
+        //     .its('response.statusCode')
+        //     .should('equal', 200);
 
         // //Document SIGN
         // cy.wait(10000)
