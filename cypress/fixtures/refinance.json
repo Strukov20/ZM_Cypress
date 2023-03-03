@@ -1,0 +1,28 @@
+{
+    "data": {
+       "loanType" : "refinance",
+       "kindOfProperty" : "condo",
+       "willThisBe" : "primary residence",
+       "propertyAdress" : {
+            "streetAdress" : "7700 Floyd Curl Dr",
+            "city" : "San Antonio",
+            "state" : "Texas",
+            "zip" : "78229"
+        },
+       "propertyValue" : "777000",
+       "firstMortgageBalance" : "210279",
+       "wouldDoYouLikeToday" : "Take cash out of your home",
+       "cashOutAmount" : "2500",
+       "creditScore" : "Excellent",
+       "personalInformation" : {
+           "dataOfBirth" : "11111935",
+           "mirintalStatus" : "Married",
+           "socialSecurityNumber" : "999603333",
+           "citizenshipStatus" : "Citizen"
+       },
+       "addCoBorrower" : "No",
+       "editBorrowerInfo" : "Yes",
+       "yearBuilt" : "2000",
+       "startOfResidence" : "11111998"
+    }
+   }

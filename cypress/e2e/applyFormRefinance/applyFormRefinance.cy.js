@@ -1,4 +1,5 @@
 import { BaseHelper } from "../../support/baseHepler"
+import refinanceJson from "../../fixtures/refinance.json"
 
 describe('applyForm_refinance', () => {
     beforeEach(() => {
@@ -42,63 +43,63 @@ describe('applyForm_refinance', () => {
         cy.contains('Start new application')
             .click()
         //What would you like to do today?
-        cy.contains('refinance')
+        cy.contains(refinanceJson.data.loanType)
             .click()
 
         //What kind of property are you interested in?
-        cy.contains('condo')
+        cy.contains(refinanceJson.data.kindOfProperty)
             .click()
 
         //Will this be a...
         cy.wait('@progress_pass')
             .its('response.statusCode')
             .should('equal', 200);
-        cy.contains('primary residence').should('be.visible')
-        cy.contains('primary residence')
+        cy.contains(refinanceJson.data.willThisBe).should('be.visible')
+        cy.contains(refinanceJson.data.willThisBe)
             .click()
         
         //Property Address
         cy.get('[data-testid="address__streetAddressInput"]')
-            .type('7700 Floyd Curl Dr', {force: true, scrollBehavior: 'center'})
+            .type(refinanceJson.data.propertyAdress.streetAdress , {force: true, scrollBehavior: 'center'})
         cy.get('[data-testid="address__cityInput"]')
-            .type('San Antonio', {force: true, scrollBehavior: 'center'})
+            .type(refinanceJson.data.propertyAdress.city , {force: true, scrollBehavior: 'center'})
         cy.get('input[role="combobox"][aria-expanded="false"]')
-            .type('Texas', {force: true, scrollBehavior: 'center'})
+            .type(refinanceJson.data.propertyAdress.state , {force: true, scrollBehavior: 'center'})
         cy.get('[class=" css-z119h0-option"]')
             .click()
         cy.get('[data-testid="address__zipCodeInput"]')
             .focus()
-            .type('78229')
+            .type(refinanceJson.data.propertyAdress.zip)
         cy.get('[data-testid="footer__nextButton"]')
             .click()
 
         //Property Value
         cy.get('[name="propertyValue"]')
             .focus()
-            .type('700000')
+            .type(refinanceJson.data.propertyValue)
         cy.get('[data-testid="footer__nextButton"]')
             .click()
 
         //How much do you owe on your current mortgage?
         cy.get('[name="firstMortgageBalance"]') 
             .focus()
-            .type('210279')
+            .type(refinanceJson.data.firstMortgageBalance)
         cy.get('[data-testid="footer__nextButton"]')
             .click()
 
         //What would you like to do today?
-        cy.contains('Take cash out of your home')
+        cy.contains(refinanceJson.data.wouldDoYouLikeToday)
             .click()
         
         //Cash Out Amount
         cy.get('[name="cashOutAmount"]')
             .focus()
-            .type('2500')
+            .type(refinanceJson.data.cashOutAmount)
         cy.get('[data-testid="footer__nextButton"]')
             .click()
 
         //Please give us an idea of your credit score
-        cy.contains('Excellent')
+        cy.contains(refinanceJson.data.creditScore)
             .click()
 
         // //Additional question
@@ -132,28 +133,28 @@ describe('applyForm_refinance', () => {
         //Personal Info
         cy.get('input[data-testid="personalInfoPart__dateOfBirth"]')
             .clear()
-            .type('11111930', {force: true, scrollBehavior: 'center'})
+            .type(refinanceJson.data.personalInformation.dataOfBirth, {force: true, scrollBehavior: 'center'})
             .trigger('tab', {key: 9})
         cy.get('[data-testid="personalInfoPart__maritalStatusSelect"]')
             .find('input[autocapitalize="none"][aria-autocomplete="list"][role="combobox"]')
-            .type('Married')
+            .type(refinanceJson.data.personalInformation.mirintalStatus)
             .get('[class=" css-z119h0-option"]')
             .click()
         cy.get('[name="borrowers[0].socialSecurityNumber"]')
             .focus()
-            .type('999603333')
+            .type(refinanceJson.data.personalInformation.socialSecurityNumber)
         cy.get('[data-testid="personalInfoPart__citizenshipStatusSelect"]')
             .find('input[autocapitalize="none"][autocorrect="off"][spellcheck="false"]')
             .focus()
-            .type('Citizen')
+            .type(refinanceJson.data.personalInformation.citizenshipStatus)
         cy.get('[class=" css-z119h0-option"]')
             .click()
         cy.get('[data-testid="footer__nextButton"]')
             .click()
 
         //Do you want to add a co-borrower?
-        cy.get('[aria-label="cancel action"]')
-            .contains('No')
+        cy.get('button[type="button"]')
+            .contains(refinanceJson.data.addCoBorrower)
             .click()
         
         //Credit Profile
@@ -161,9 +162,9 @@ describe('applyForm_refinance', () => {
             .click()
 
         //You will not be able to add, edit or delete co-borrowers at further steps. Would you like to proceed?
-        cy.get('[aria-label="confirm action"]')
-            .contains('Yes')
-            .click()
+        // cy.get('button[type="button"]')
+        //     .contains(refinanceJson.data.editBorrowerInfo)
+        //     .click()
 
         //Property Information
         // cy.wait('@startGettingCreditReport')
@@ -172,7 +173,7 @@ describe('applyForm_refinance', () => {
         cy.wait(1000)
         cy.get('[name="yearBuilt"]')
             .focus()
-            .type('2000')
+            .type(refinanceJson.data.yearBuilt)
         cy.get('input[name="taxesInsuranceEscrowed"]')
             .eq(0)
             .check({force:true})
@@ -189,7 +190,9 @@ describe('applyForm_refinance', () => {
         //Residence Info
         cy.get('[data-testid="currentResidence__startOfResidencePicker"]')
             .focus()
-            .type('002011998')
+            .clear()
+            .type(refinanceJson.data.startOfResidence)
+            .wait(1000)
             .trigger('keydown', { keyCode: 9 })
         cy.get('[data-testid="footer__nextButton"]')
             .click()

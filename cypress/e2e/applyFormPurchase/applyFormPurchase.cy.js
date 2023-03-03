@@ -1,4 +1,5 @@
 import { BaseHelper } from "../../support/baseHepler"
+import purchaseJson from '../../fixtures/purchase.json'
 
 describe('applyForm_refinance', () => {
     beforeEach(() => {
@@ -37,64 +38,61 @@ describe('applyForm_refinance', () => {
             url: "api/application/*/submit-second-part/v1"
         }).as('SecondPartSubmit')
 
-        //Pre-Qualification
-
         cy.contains('Start new application')
             .click()
         //What would you like to do today?
-        cy.contains('purchase')
+        cy.contains(purchaseJson.data.loanType)
             .click()
 
         //Are you a first time home buyer?
-        cy.contains('No')
+        cy.contains(purchaseJson.data.firstTimeHomeBuyer)
             .click()
 
         //Where are you in the process currently?
-        cy.contains('Searching or Shopping Around')
+        cy.contains(purchaseJson.data.whereAreYouInTheProcessCurrently)
             .click()
 
         //What kind of property are you interested in?
-        cy.contains('single family')
+        cy.contains(purchaseJson.data.propertyAreInterested)
             .click()
 
         //Will this be a...
         cy.wait('@progress_pass')
             .its('response.statusCode')
             .should('equal', 200);
-        cy.contains('primary residence').should('be.visible')
-        cy.contains('primary residence')
+        cy.contains(purchaseJson.data.willThisBe).should('be.visible')
+        cy.contains(purchaseJson.data.willThisBe)
             .click()
         
         //Property Address
         cy.get('input[name="zip"]')
             .focus()
-            .type('77077')
+            .type(purchaseJson.data.propertyAdress)
         cy.get('[class="pac-item"]')
             .click({force:true})
+            .wait(1000)
         cy.get('[data-testid="footer__nextButton"]')
-            .click()
-            cy.get('[data-testid="footer__nextButton"]')
             .click()
 
         //Property Value
         cy.get('[name="propertyValue"]')
             .focus()
-            .type('444000')
+            .type(purchaseJson.data.propertyValue)
         cy.get('[data-testid="footer__nextButton"]')
             .click()
 
         //Please give us an idea of your credit score
-        cy.contains('Excellent')
+        cy.contains(purchaseJson.data.creditScore)
             .click()
 
         //Down Payment
-        cy.contains('20%')
+        cy.contains(purchaseJson.data.downPayment)
             .click()
         cy.get('[data-testid="footer__nextButton"]')
             .click()
         
         //Are you working with a realtor?
-        cy.contains('No')
+        cy.contains(purchaseJson.data.workingWithRealtors)
             .click()
         //Enter the information below to see your rates
         cy.get('input[name="isConsentObtained"]')
@@ -120,28 +118,29 @@ describe('applyForm_refinance', () => {
         //Personal Info
         cy.get('input[data-testid="personalInfoPart__dateOfBirth"]')
             .clear()
-            .type('11111940', {force: true, scrollBehavior: 'center'})
+            .type(purchaseJson.data.personalInformation.dataOfBirth, {force: true, scrollBehavior: 'center'})
+            .wait(1000)
             .trigger('tab', {key: 9})
         cy.get('[data-testid="personalInfoPart__maritalStatusSelect"]')
             .find('input[autocapitalize="none"][aria-autocomplete="list"][role="combobox"]')
-            .type('Married')
+            .type(purchaseJson.data.personalInformation.mirintalStatus)
             .get('[class=" css-z119h0-option"]')
             .click()
         cy.get('[name="borrowers[0].socialSecurityNumber"]')
             .focus()
-            .type('999603333')
+            .type(purchaseJson.data.personalInformation.socialSecurityNumber)
         cy.get('[data-testid="personalInfoPart__citizenshipStatusSelect"]')
             .find('input[autocapitalize="none"][autocorrect="off"][spellcheck="false"]')
             .focus()
-            .type('Citizen')
+            .type(purchaseJson.data.personalInformation.citizenshipStatus)
         cy.get('[class=" css-z119h0-option"]')
             .click()
         cy.get('[data-testid="footer__nextButton"]')
             .click()
 
         //Do you want to add a co-borrower?
-        cy.get('[aria-label="cancel action"]')
-            .contains('No')
+        cy.get('button[type="button"]')
+            .contains(purchaseJson.data.addCoBorrower)
             .click()
         
         //Credit Profile
@@ -149,9 +148,9 @@ describe('applyForm_refinance', () => {
             .click()
 
         //You will not be able to add, edit or delete co-borrowers at further steps. Would you like to proceed?
-        cy.get('[aria-label="confirm action"]')
-            .contains('Yes')
-            .click()
+        // cy.get('[aria-label="confirm action"]')
+        //     .contains(purchaseJson.data.editBorrowerInfo)
+        //     .click()
 
         //Property Information
         // cy.wait('@startGettingCreditReport')
@@ -170,26 +169,26 @@ describe('applyForm_refinance', () => {
 
         //Residence Info
         cy.get('[data-testid="currentResidenceAddress__streetAddressInput"]')
-            .type('7700 Floyd Curl Dr', {force: true, scrollBehavior: 'center'})
+            .type(purchaseJson.data.residenceInfo.streetAdress , {force: true, scrollBehavior: 'center'})
         cy.get('[data-testid="currentResidenceAddress__cityInput"]')
-            .type('San Antonio', {force: true, scrollBehavior: 'center'})
+            .type(purchaseJson.data.residenceInfo.city , {force: true, scrollBehavior: 'center'})
         cy.get('input[role="combobox"][aria-expanded="false"]')
             .eq(0)
-            .type('Texas', {force: true, scrollBehavior: 'center'})
+            .type(purchaseJson.data.residenceInfo.state , {force: true, scrollBehavior: 'center'})
         cy.get('[class=" css-z119h0-option"]')
             .click()
         cy.get('[data-testid="currentResidenceAddress__zipCodeInput"]')
             .focus()
-            .type('77077')
+            .type(purchaseJson.data.residenceInfo.zip)
         cy.get('[data-testid="currentResidence__startOfResidencePicker"]')
             .clear()
-            .type('11111990', {force: true})
-            .wait(1000)
+            .type(purchaseJson.data.residenceInfo.currentResidenceLivingData, {force: true})
+            .wait(1500)
             .trigger('tab', {key: 9})
-            .trigger('tab', {key: 9})
+            // .trigger('tab', {key: 9})
         cy.get('input[role="combobox"][aria-expanded="false"]')
             .eq(1)
-            .type('Own', {force: true, scrollBehavior: 'center'})
+            .type(purchaseJson.data.residenceInfo.residenceType , {force: true, scrollBehavior: 'center'})
         cy.get('[class=" css-11lfppk"]')
             .find('[class=" css-z119h0-option"]')
             .click()
@@ -228,19 +227,19 @@ describe('applyForm_refinance', () => {
         cy.wait(1000)
         cy.get('input[type="text"][role="combobox"]')
             .clear()
-            .type('Savings')
+            .type(purchaseJson.data.assets.assetType)
         cy.get('[class=" css-11lfppk"]')
             .find('[class=" css-z119h0-option"]')
             .click()
         cy.get('input[data-testid="assets[0]__financialInstitutionInput"]')
             .clear({force: true})
-            .type('qwerty')
+            .type(purchaseJson.data.assets.depositorInstitution)
         cy.get('input[data-testid="assets[0]__accountNumberInput"]')
             .clear({force: true})
-            .type('123123')
+            .type(purchaseJson.data.assets.accountNumber)
         cy.get('input[data-testid="assets[0]__cashOrMarketValueInput"]')
             .clear({force: true})
-            .type('123456')
+            .type(purchaseJson.data.assets.assetValue)
             .wait(1000)
         cy.get('[data-testid="footer__nextButton"]')
             .click() 
