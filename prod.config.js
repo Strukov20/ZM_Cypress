@@ -7,7 +7,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     //change url for other companies, 
-    baseUrl: 'https://application.interfirst.com?isTest=true',
+    baseUrl: 'https://apply.zeromortgage.com/?isTest=true',
     viewportHeight : 1080,
     viewportWidth : 1920,
     defaultCommandTimeout : 30000,

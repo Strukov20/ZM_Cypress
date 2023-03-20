@@ -3,6 +3,7 @@
     "cy:open": "cypress open",
     "cy:dev": "npx cypress open --e2e --config-file dev.config.js --browser chrome",
     "cy:qa": "npx cypress open --e2e --config-file qa.config.js --browser chrome",
+    "cy:qa_admin": "npx cypress open --e2e --config-file qa_admin.config.js --browser chrome",
     "cy:prod": "npx cypress open --e2e --config-file prod.config.js --browser chrome"
   },
   "dependencies": {

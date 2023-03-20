@@ -1,4 +1,5 @@
 export class BaseHelper {
+
     static login () {
         cy.visit('')
         cy.intercept({
@@ -43,4 +44,15 @@ export class BaseHelper {
         // cy.contains('Yes')
         //     .click()
     }   
+
+    static loginToAdmin () {
+        cy.visit('')
+        cy.get('[name="email"]')
+            .type('bstrukov@interfirst.com')
+        cy.get('[name="password"]')
+            .clear()
+            .type('Admin1admin.')
+        cy.get('[data-testid="login-button"]')
+            .click()
+    }
 }

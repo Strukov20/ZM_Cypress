@@ -7,7 +7,9 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     //change url for other companies, 
-    baseUrl: 'https://qa-apply.cyberdynemortgage.com/',
+    baseUrl: 'https://qa-skynet.cyberdynemortgage.com/',
+    lsAccountsCompanyId: "47432c6f-a899-422e-a421-9d53c9eb37a0",
+    isAllFFEnabled: "true",
     viewportHeight : 1080,
     viewportWidth : 1920,
     defaultCommandTimeout : 30000,
@@ -16,6 +18,6 @@ module.exports = defineConfig({
     numTestsKeptInMemory : 10
   },
   env: {
-    build : "prod",
+    build : "stage",
   },
 });
