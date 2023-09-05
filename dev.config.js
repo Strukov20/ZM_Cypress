@@ -1,5 +1,3 @@
-
-
 const { defineConfig } = require("cypress")
 
 module.exports = defineConfig({
@@ -9,7 +7,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     //change url for other companies, 
-    baseUrl: 'https://dev-apply.cyberdynemortgage.com/',
+    baseUrl: 'https://apply.dev.cyberdynemortgage.com/',
     viewportHeight : 1080,
     viewportWidth : 1920,
     defaultCommandTimeout : 30000,

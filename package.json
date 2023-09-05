@@ -4,9 +4,11 @@
     "cy:dev": "npx cypress open --e2e --config-file dev.config.js --browser chrome",
     "cy:qa": "npx cypress open --e2e --config-file qa.config.js --browser chrome",
     "cy:qa_admin": "npx cypress open --e2e --config-file qa_admin.config.js --browser chrome",
-    "cy:prod": "npx cypress open --e2e --config-file prod.config.js --browser chrome"
+    "cy:stage": "npx cypress open --e2e --config-file stage.config.js --browser chrome",
+    "cy:prod": "npx cypress open --e2e --config-file prod.config.js --browser chrome",
+    "cy:prod_legacy": "npx cypress open --e2e --config-file prod_legacy.config.js --browser chrome"
   },
-  "dependencies": {
-    "cypress": "^12.5.1"
+  "devDependencies": {
+    "cypress": "^12.17.3"
   }
 }

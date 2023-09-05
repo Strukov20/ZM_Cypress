@@ -7,7 +7,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     //change url for other companies, 
-    baseUrl: 'https://apply.zeromortgage.com',
+    baseUrl: 'https://apply.stage.cyberdynemortgage.com/',
     viewportHeight : 1080,
     viewportWidth : 1920,
     defaultCommandTimeout : 30000,
@@ -16,6 +16,6 @@ module.exports = defineConfig({
     numTestsKeptInMemory : 10
   },
   env: {
-    build : "prod",
+    build : "stage",
   },
 });

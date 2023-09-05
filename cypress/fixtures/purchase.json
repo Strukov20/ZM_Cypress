@@ -5,7 +5,7 @@
     "whereAreYouInTheProcessCurrently" : "Searching or Shopping Around",
     "propertyAreInterested" : "single family",
     "willThisBe" : "primary residence",
-    "propertyAdress" : "77077",
+    "propertyAdress" : " 92211",
     "propertyValue" : "444000",
     "creditScore" : "Excellent",
     "downPayment" : "20%",
@@ -32,5 +32,8 @@
         "accountNumber" : "654321",
         "assetValue" : "123456"
     }
+ },
+ "variables": {
+    "firstItemOfList": "[class=\" css-cqn9m0-option\"]"
  }
 }

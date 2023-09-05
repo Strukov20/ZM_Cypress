@@ -4,7 +4,7 @@ export class BaseHelper {
         cy.visit('')
         cy.intercept({
             method: "POST",
-            url: "api/signin/createrequest"
+            url: "api/signin/create-request"
         }).as('getVerification')
         cy.get('[data-testid="header__loginButton"]')
         .click()
@@ -53,6 +53,24 @@ export class BaseHelper {
             .clear()
             .type('Admin1admin.')
         cy.get('[data-testid="login-button"]')
+            .click()
+    }
+
+    static clickNextButton () {
+        cy.get('[data-testid="footer__nextButton"]')
+        .click()
+    }
+
+    static loginToLegacyPortal () {
+        cy.visit('')
+
+        cy.get('[id="ctl00_ContentPlaceHolder1_loginToDataTrac_UserName"]')
+            .type('dmdadmin')
+
+        cy.get('[id="ctl00_ContentPlaceHolder1_loginToDataTrac_Password"]')
+            .type('!dmd333')
+            
+        cy.get('input[value="Log In"]')
             .click()
     }
 }

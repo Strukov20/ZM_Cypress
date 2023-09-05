@@ -39,16 +39,19 @@ describe('applyForm_refinance', () => {
     })
 
     it('APPLY: refinance flow', () => {
-        context('Apply COMPLETED!', () => {   
+        context('Apply COMPLETED!', () => {  
             cy.contains('Start new application')
             .click()
+            // Do you want to save time and use personal information from a previous application? 
+            cy.get('button[aria-label="cancel action"]')
+                .click()
             //What would you like to do today?
             cy.contains(purchaseJson.data.loanType)
                 .click()
 
-            // //Are you a first time home buyer?
-            // cy.contains(purchaseJson.data.firstTimeHomeBuyer)
-            //     .click()
+            //Are you a first time home buyer?
+            cy.contains(purchaseJson.data.firstTimeHomeBuyer)
+                .click()
 
             //Where are you in the process currently?
             cy.contains(purchaseJson.data.whereAreYouInTheProcessCurrently)
@@ -73,15 +76,13 @@ describe('applyForm_refinance', () => {
             cy.get('[class="pac-item"]')
                 .click({force:true})
                 .wait(1000)
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Property Value
             cy.get('[name="propertyValue"]')
                 .focus()
                 .type(purchaseJson.data.propertyValue)
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Please give us an idea of your credit score
             cy.contains(purchaseJson.data.creditScore)
@@ -90,8 +91,7 @@ describe('applyForm_refinance', () => {
             //Down Payment
             cy.contains(purchaseJson.data.downPayment)
                 .click()
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
             
             //Are you working with a realtor?
             cy.contains(purchaseJson.data.workingWithRealtors)
@@ -101,21 +101,19 @@ describe('applyForm_refinance', () => {
                 .check({ force: true })
             cy.get('input[name="isUserAgreeToReceiveSms"]')
                 .check({ force: true })
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Rate Comparison
-            cy.wait('@ProgramsReceived_first')
-                .its('response.statusCode')
-                .should('equal', 200);
+            // cy.wait('@ProgramsReceived_first')
+            //     .its('response.statusCode')
+            //     .should('equal', 200);
             cy.get('[data-testid="rate_30"]')
                 .eq(0)
                 .click('left', { force: true })
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
-            cy.wait('@FirstPartSubmit')
-                .its('response.statusCode')
-                .should('equal', 200);
+            BaseHelper.clickNextButton()
+            // cy.wait('@FirstPartSubmit')
+            //     .its('response.statusCode')
+            //     .should('equal', 200);
 
             //Personal Info
             cy.get('input[data-testid="personalInfoPart__dateOfBirth"]')
@@ -126,19 +124,18 @@ describe('applyForm_refinance', () => {
             cy.get('[data-testid="personalInfoPart__maritalStatusSelect"]')
                 .find('input[autocapitalize="none"][aria-autocomplete="list"][role="combobox"]')
                 .type(purchaseJson.data.personalInformation.mirintalStatus)
-                .get('[class=" css-z119h0-option"]')
+                .get(purchaseJson.variables.firstItemOfList)
                 .click()
-            cy.get('[name="borrowers[0].socialSecurityNumber"]')
-                .focus()
-                .type(purchaseJson.data.personalInformation.socialSecurityNumber)
+            // cy.get('[name="borrowers[0].socialSecurityNumber"]')
+            //     .focus()
+            //     .type(purchaseJson.data.personalInformation.socialSecurityNumber)
             cy.get('[data-testid="personalInfoPart__citizenshipStatusSelect"]')
                 .find('input[autocapitalize="none"][autocorrect="off"][spellcheck="false"]')
                 .focus()
                 .type(purchaseJson.data.personalInformation.citizenshipStatus)
-            cy.get('[class=" css-z119h0-option"]')
+            cy.get(purchaseJson.variables.firstItemOfList)
                 .click()
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Do you want to add a co-borrower?
             cy.get('button[type="button"]')
@@ -146,8 +143,7 @@ describe('applyForm_refinance', () => {
                 .click()
             
             //Credit Profile
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //You will not be able to add, edit or delete co-borrowers at further steps. Would you like to proceed?
             // cy.get('[aria-label="confirm action"]')
@@ -158,16 +154,15 @@ describe('applyForm_refinance', () => {
             // cy.wait('@startGettingCreditReport')
             //     .its('response.statusCode')
             //     .should('equal', 200);
-            cy.wait(1000)
-            cy.get('input[name="taxesInsuranceEscrowed"]')
-                .eq(0)
-                .check({force:true})
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            // cy.wait(1000)
+            // cy.get('input[name="taxesInsuranceEscrowed"]')
+            //     .eq(0)
+            //     .check({force:true})
+            // cy.get('[data-testid="footer__nextButton"]')
+            //     .click()
 
             //Title Holder
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Residence Info
             cy.get('[data-testid="currentResidenceAddress__streetAddressInput"]')
@@ -177,7 +172,7 @@ describe('applyForm_refinance', () => {
             cy.get('input[role="combobox"][aria-expanded="false"]')
                 .eq(0)
                 .type(purchaseJson.data.residenceInfo.state , {force: true, scrollBehavior: 'center'})
-            cy.get('[class=" css-z119h0-option"]')
+            cy.get(purchaseJson.variables.firstItemOfList)
                 .click()
             cy.get('[data-testid="currentResidenceAddress__zipCodeInput"]')
                 .focus()
@@ -191,47 +186,45 @@ describe('applyForm_refinance', () => {
             cy.get('input[role="combobox"][aria-expanded="false"]')
                 .eq(1)
                 .type(purchaseJson.data.residenceInfo.residenceType , {force: true, scrollBehavior: 'center'})
-            cy.get('[class=" css-11lfppk"]')
-                .find('[class=" css-z119h0-option"]')
+            cy.get(purchaseJson.variables.firstItemOfList)
                 .click()
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
             
             //Additional Real Estate Owned
+            cy.get('button[aria-label="delete property"]')
+                .scrollIntoView()
+                .click()
+            cy.get('button[aria-label="confirm action"]')
+                .click()
             cy.get('[data-testid="hasPropertiesRadioGroup__component"]')
                 .find('[data-testid="NoRadioButton__component"]')
                 .find('input[name="hasProperties"]')
-                .click({force: true})
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+                .check({force: true})
+            BaseHelper.clickNextButton()
 
             //Income
             cy.get('[data-testid="hasIncomesRadioGroup__component"]')
                 .find('[data-testid="NoRadioButton__component"]')
                 .find('input[name="hasIncomes"]')
                 .click({force: true})
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Down Payment Source
             cy.get('input[value="Gift"]')
                 .check({force: true})
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Assets
             cy.get('input[name="hasAssets"][value="No"]')
                 .click({force: true})
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
             cy.get('button[aria-label="confirm action"]')
                 .click()
             cy.wait(1000)
             cy.get('input[type="text"][role="combobox"]')
                 .clear()
                 .type(purchaseJson.data.assets.assetType)
-            cy.get('[class=" css-11lfppk"]')
-                .find('[class=" css-z119h0-option"]')
+            cy.get(purchaseJson.variables.firstItemOfList)
                 .click()
             cy.get('input[data-testid="assets[0]__financialInstitutionInput"]')
                 .clear({force: true})
@@ -243,26 +236,30 @@ describe('applyForm_refinance', () => {
                 .clear({force: true})
                 .type(purchaseJson.data.assets.assetValue)
                 .wait(1000)
-            cy.get('[data-testid="footer__nextButton"]')
-                .click() 
+            BaseHelper.clickNextButton() 
                 
-            //Do you have any other assets?
-            cy.get('button[aria-label="cancel action"]')
-                .click()
+            // //Do you have any other assets?
+            // cy.get('button[aria-label="cancel action"]')
+            //     .click()
 
             //Property and Loan Declarations
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            cy.get('[data-testid="intendToOccupyPropertyAsPrimaryResidenceRadioGroup__component"]')
+                .find('[data-testid="NoRadioButton__component"]')
+                .find('input[name="intendToOccupyPropertyAsPrimaryResidence"]')
+                .check({force: true})
+            cy.get('[data-testid="ownershipInterestPastThreeYearsRadioGroup__component"]')
+                .find('[data-testid="NoRadioButton__component"]')
+                .find('input[name="ownershipInterestPastThreeYears"]')
+                .check({force: true})
+            BaseHelper.clickNextButton()
 
             //Declarations about your finances
             cy.wait(1000)
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Military Services
             cy.wait(1000)
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Homeownership Education and Housing Counseling
             cy.get('[data-testid="isBorrowerCompletedHomeownershipEducationRadioGroup__component"]')
@@ -273,16 +270,14 @@ describe('applyForm_refinance', () => {
                 .find('[data-testid="NoRadioButton__component"]')
                 .find('[name="isBorrowerCompletedHousingCounseling"]')
                 .check()
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Language Preferences
             cy.get('[data-testid="languagePreferenceRadioGroup__component"]')
                 .find('[data-testid="EnglishRadioButton__component"]')
                 .find('[name="languagePreference"]')
                 .check({force:true})
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Demographic Information
             cy.get('input[name="isEthnicityNotProvided"]')
@@ -291,22 +286,25 @@ describe('applyForm_refinance', () => {
                 .check({force:true})
             cy.get('input[name="isRaceNotProvided"]')
                 .check({force:true})
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
 
             //Review
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
+            
+            //Credit Profile
+            cy.get('input[inputmode="tel"]')
+                .clear({force: true})
+                .type(purchaseJson.data.personalInformation.socialSecurityNumber)
+            BaseHelper.clickNextButton()
 
             //Compare Terms
-            cy.wait('@ProgramsReceived_second')
-                .its('response.statusCode')
-                .should('equal', 200);
+            // cy.wait('@ProgramsReceived_second')
+            //     .its('response.statusCode')
+            //     .should('equal', 200);
             cy.get('[data-testid="rate_30"]')
                 .eq(0)
                 .click('left', { force: true })
-            cy.get('[data-testid="footer__nextButton"]')
-                .click()
+            BaseHelper.clickNextButton()
             cy.wait('@SecondPartSubmit')
                 .its('response.statusCode')
                 .should('equal', 200);

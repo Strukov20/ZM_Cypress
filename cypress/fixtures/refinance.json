@@ -4,12 +4,12 @@
        "kindOfProperty" : "condo",
        "willThisBe" : "primary residence",
        "propertyAdress" : {
-            "streetAdress" : "7700 Floyd Curl Dr",
-            "city" : "San Antonio",
+            "streetAdress" : "7700 Corporate Dr",
+            "city" : "Dallas",
             "state" : "Texas",
-            "zip" : "78229"
+            "zip" : "75228"
         },
-       "propertyValue" : "777000",
+       "propertyValue" : "707070",
        "firstMortgageBalance" : "210279",
        "wouldDoYouLikeToday" : "Take cash out of your home",
        "cashOutAmount" : "2500",
@@ -24,5 +24,8 @@
        "editBorrowerInfo" : "Yes",
        "yearBuilt" : "2000",
        "startOfResidence" : "11111998"
+    },
+    "variables": {
+       "firstItemOfList": "[class=\" css-cqn9m0-option\"]"
     }
    }

@@ -1,0 +1,17 @@
+{
+    "dashboardPage": {
+      "portalLoanNumber" : "88426362",
+      "dashboardTitle" : "My Stuff:",     
+      "borrowerName" : "America_SkynetTest",
+      "propertyAddress" : "77077 Fairbanks North Houston Rd, , Houston, TX, 77040",
+      "LoanFICO" : "740",
+      "loanAmount" : "$210,200",
+      "appraisedValue" : "$777,777",
+      "loanStatus" : "Locked"
+    },
+    "generalPage" : {
+      "originator" : "INTERFIRST MORTGAGE COMPANY",
+      "propertyType" : "CONDO",
+      "purposeOfRefinance" : "NO CASH OUT - OTHER"
+    }
+   }

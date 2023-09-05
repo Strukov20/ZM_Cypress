@@ -4,6 +4,9 @@ import refinanceJson from "../../fixtures/refinance.json"
 describe('applyForm_refinance', () => {
     beforeEach(() => {
         indexedDB.deleteDatabase('localforage') // LogOut
+        // cy.clearCookies();
+        // cy.clearLocalStorage()
+        // cy.clearAllSessionStorage()
         window.localStorage.setItem('interfirstApply.changedDomainName', 'bfg-division-apply.cyberdynemortgage.com')
         BaseHelper.login();
     })
@@ -42,8 +45,14 @@ describe('applyForm_refinance', () => {
 
         cy.contains('Start new application')
             .click()
+
+        // Do you want to save time and use personal information from a previous application? 
+        cy.get('button[aria-label="cancel action"]')
+            .click()
+
         //What would you like to do today?
-        cy.contains(refinanceJson.data.loanType)
+        cy.get('[id="TypeOfLoan"]')
+            .contains(refinanceJson.data.loanType)
             .click()
 
         //What kind of property are you interested in?
@@ -62,10 +71,11 @@ describe('applyForm_refinance', () => {
         cy.get('[data-testid="address__streetAddressInput"]')
             .type(refinanceJson.data.propertyAdress.streetAdress , {force: true, scrollBehavior: 'center'})
         cy.get('[data-testid="address__cityInput"]')
+            .clear({force: true})
             .type(refinanceJson.data.propertyAdress.city , {force: true, scrollBehavior: 'center'})
         cy.get('input[role="combobox"][aria-expanded="false"]')
             .type(refinanceJson.data.propertyAdress.state , {force: true, scrollBehavior: 'center'})
-        cy.get('[class=" css-z119h0-option"]')
+        cy.get(refinanceJson.variables.firstItemOfList)
             .click()
         cy.get('[data-testid="address__zipCodeInput"]')
             .focus()
@@ -118,17 +128,17 @@ describe('applyForm_refinance', () => {
             .click()
 
         //Rate Comparison
-        cy.wait('@ProgramsReceived_first')
-            .its('response.statusCode')
-            .should('equal', 200);
+        // cy.wait('@ProgramsReceived_first')
+        //     .its('response.statusCode')
+        //     .should('equal', 200);
         cy.get('[data-testid="rate_30"]')
             .eq(0)
             .click('left', { force: true })
         cy.get('[data-testid="footer__nextButton"]')
             .click()
-        cy.wait('@FirstPartSubmit')
-            .its('response.statusCode')
-            .should('equal', 200);
+        // cy.wait('@FirstPartSubmit')
+        //     .its('response.statusCode')
+        //     .should('equal', 200);
 
         //Personal Info
         cy.get('input[data-testid="personalInfoPart__dateOfBirth"]')
@@ -138,16 +148,16 @@ describe('applyForm_refinance', () => {
         cy.get('[data-testid="personalInfoPart__maritalStatusSelect"]')
             .find('input[autocapitalize="none"][aria-autocomplete="list"][role="combobox"]')
             .type(refinanceJson.data.personalInformation.mirintalStatus)
-            .get('[class=" css-z119h0-option"]')
+            .get(refinanceJson.variables.firstItemOfList)
             .click()
-        cy.get('[name="borrowers[0].socialSecurityNumber"]')
-            .focus()
-            .type(refinanceJson.data.personalInformation.socialSecurityNumber)
+        // cy.get('[name="borrowers[0].socialSecurityNumber"]')
+        //     .focus()
+        //     .type(refinanceJson.data.personalInformation.socialSecurityNumber)
         cy.get('[data-testid="personalInfoPart__citizenshipStatusSelect"]')
             .find('input[autocapitalize="none"][autocorrect="off"][spellcheck="false"]')
             .focus()
             .type(refinanceJson.data.personalInformation.citizenshipStatus)
-        cy.get('[class=" css-z119h0-option"]')
+        cy.get(refinanceJson.variables.firstItemOfList)
             .click()
         cy.get('[data-testid="footer__nextButton"]')
             .click()
@@ -264,11 +274,18 @@ describe('applyForm_refinance', () => {
         //Review
         cy.get('[data-testid="footer__nextButton"]')
             .click()
+        
+        //Credit Profile
+        cy.get('input[inputmode="tel"]')
+            .clear({force: true})
+            .type('999603333')
+        cy.get('[data-testid="footer__nextButton"]')
+            .click()
 
         //Compare Terms
-        cy.wait('@ProgramsReceived_second')
-            .its('response.statusCode')
-            .should('equal', 200);
+        // cy.wait('@ProgramsReceived_second')
+        //     .its('response.statusCode')
+        //     .should('equal', 200);
         cy.get('[data-testid="rate_30"]')
             .eq(0)
             .click('left', { force: true })

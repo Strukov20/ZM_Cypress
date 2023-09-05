@@ -7,7 +7,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     //change url for other companies, 
-    baseUrl: 'https://qa-skynet.cyberdynemortgage.com/',
+    baseUrl: 'https://skynet.qa.cyberdynemortgage.com/login',
     lsAccountsCompanyId: "47432c6f-a899-422e-a421-9d53c9eb37a0",
     isAllFFEnabled: "true",
     viewportHeight : 1080,
