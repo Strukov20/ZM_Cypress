@@ -1,7 +1,6 @@
 export class BaseHelper {
 
     static login () {
-        cy.visit('')
         cy.intercept({
             method: "POST",
             url: "api/signin/create-request"

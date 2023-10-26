@@ -5,6 +5,7 @@ describe('applyForm_refinance', () => {
     beforeEach(() => {
         indexedDB.deleteDatabase('localforage') // LogOut
         window.localStorage.setItem('interfirstApply.changedDomainName', 'bfg-division-apply.cyberdynemortgage.com')
+        cy.visit('')
         BaseHelper.login();
 
         cy.intercept({

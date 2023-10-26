@@ -8,7 +8,7 @@ describe('applyForm_refinance', () => {
         // cy.clearLocalStorage()
         // cy.clearAllSessionStorage()
         window.localStorage.setItem('interfirstApply.changedDomainName', 'bfg-division-apply.cyberdynemortgage.com')
-        BaseHelper.login();
+        cy.visit('')
     })
     it('Base refinance flow', () => {
         cy.intercept({
@@ -43,12 +43,12 @@ describe('applyForm_refinance', () => {
 
         //Pre-Qualification
 
-        cy.contains('Start new application')
-            .click()
+        // cy.contains('Start new application')
+        //     .click()
 
-        // Do you want to save time and use personal information from a previous application? 
-        cy.get('button[aria-label="cancel action"]')
-            .click()
+        // // Do you want to save time and use personal information from a previous application? 
+        // cy.get('button[aria-label="cancel action"]')
+        //     .click()
 
         //What would you like to do today?
         cy.get('[id="TypeOfLoan"]')
@@ -60,9 +60,9 @@ describe('applyForm_refinance', () => {
             .click()
 
         //Will this be a...
-        cy.wait('@progress_pass')
-            .its('response.statusCode')
-            .should('equal', 200);
+        // cy.wait('@progress_pass')
+        //     .its('response.statusCode')
+        //     .should('equal', 200);
         cy.contains(refinanceJson.data.willThisBe).should('be.visible')
         cy.contains(refinanceJson.data.willThisBe)
             .click()
@@ -120,10 +120,30 @@ describe('applyForm_refinance', () => {
         //     .click()
 
         //Enter the information below to see your rates
+        cy.get('input[name="firstName"]')
+            .clear({ force: true })
+            .type("Andy")
+        cy.get('input[name="lastName"]')
+            .clear({ force: true })
+            .type("America")
+        cy.get('input[name="email"]')
+            .clear({ force: true })
+            .type("andyamerica-test@mailinator.com")
+        cy.get('input[name="cellPhoneNumber"]')
+            .clear({ force: true })
+            .type("8888888888")
         cy.get('input[name="isConsentObtained"]')
             .check({ force: true })
+            .wait(1000)
         cy.get('input[name="isUserAgreeToReceiveSms"]')
             .check({ force: true })
+            .wait(1000)
+        
+            //Login
+        BaseHelper.login()
+        cy.contains('Yes')
+            .click()
+
         cy.get('[data-testid="footer__nextButton"]')
             .click()
 
